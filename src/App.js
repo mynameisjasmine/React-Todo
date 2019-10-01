@@ -1,7 +1,9 @@
 import React from 'react';
+import "./components/TodoComponents/Todo.css";
 import { data } from './components/TodoComponents/data';
-import Todo from './components/TodoComponents/Todo';
 import TodoList from './components/TodoComponents/TodoList';
+import TodoForm from './components/TodoComponents/TodoForm';
+
 
 
 class App extends React.Component {
@@ -11,11 +13,14 @@ class App extends React.Component {
   constructor() {
     super(); 
       this.state = {
-      task: '',
+      // task: '',
       data: data
       }
 
+    }
+
       toggleTask = id => {
+        console.log('toggleTask', id)
         this.setState({
           data: this.state.data.map(item => {
          if(item.id === id) {
@@ -43,15 +48,16 @@ class App extends React.Component {
     
     clearTask = () => {
       this.setState({
-        
-      })
+        data: this.state.data.filter(item => !item.completed)
+      });
     }
-  }
+  
   render() {
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>
-        <TodoList item={this.state.data}/>
+        <TodoForm addTask={this.addTask} clearTask={this.clearTask}/>
+        <TodoList item={this.state.data} toggleTask={this.toggleTask}/>
       </div>
     );
   }
